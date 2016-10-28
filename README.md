@@ -1,4 +1,4 @@
-snacka
+shitchat
 =====
 
 An OTP application
