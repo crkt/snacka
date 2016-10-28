@@ -1,0 +1,2 @@
+# shitchat
+Erlang chat.
