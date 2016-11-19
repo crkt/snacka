@@ -1,68 +1,57 @@
 -module(client_register).
--export([start_link/0,
-         init/0,
-         stop/0]).
+-behaviour(gen_server).
+
+-export([start_link/0]).
+
+%% Init && Callbacks
+-export([init/1, terminate/2]).
+-export([handle_call/3, handle_cast/2, handle_info/2]).
+-export([code_change/3]).
+
+%% API
 -export([register_client/2,
-         registered_clients/0,
-         unregister_client/1,
-         whereis_client/1]).
+	 registered_clients/0,
+	 whereis_client/1,
+	 unregister_client/1]).
+	 
 
 start_link() ->
-    Pid = spawn(?MODULE, init, []),
-    register(client_register, Pid),
-    {ok, Pid}.
+    gen_server:start_link({local, client_register}, ?MODULE, [], []).
 
-init() ->
-    loop([]).
+init(_Args) ->
+    {ok, []}.
 
-stop() ->
-    exit(client_register).
+handle_call({register, Name, Socket}, _From, State) ->
+    {reply, ok, [{Name, Socket}] ++ State};
+handle_call(registered, _From, State) ->
+    {reply, State, State};
+handle_call({whereis, Name}, _From, State) ->
+    {reply, proplists:get_value(Name, State), State};
+handle_call({unregister, Name}, _From, State) ->
+    {reply, ok, proplists:delete(Name, State)}.
 
-%% Private loop for storage
-loop(Clients) ->
-    receive
-        {register, Name, Socket, From} ->
-            From ! {register_reply, ok},
-            loop([{Name, Socket}] ++ Clients);
-        {registered, From} ->
-            From ! {registered_reply, Clients},
-            loop(Clients);
-        {whereis, Name, From} ->
-            Client = proplists:get_value(Name, Clients),
-            From ! {whereis_reply, Client},
-            loop(Clients);                
-        {unregister, Name, From} ->
-            NewClients = proplists:delete(Name, Clients),
-            From ! {unregister_reply, ok},
-            loop(NewClients)
-    end.
-    
+handle_cast(_Cast, State) ->
+    {noreply, State}.
+
+handle_info(_Msg, State) ->
+    {noreply, State}.
+
+terminate(_Reason, _State) ->
+    ok.
+
+code_change(_OldVsn, _NewVsn, State) ->
+    {ok, State}.
+
 
 %% External API
 register_client(Name, Socket) ->
-    client_register ! {register, Name, Socket, self()},
-    receive 
-        {register_reply, Reply} ->
-            Reply
-    end.
+    gen_server:call(client_register, {register, Name, Socket}).
 
 registered_clients() ->
-    client_register ! {registered, self()},
-    receive 
-        {registered_reply, Clients} ->
-            Clients
-    end.
+    gen_server:call(client_register, registered).
 
 whereis_client(Name) ->
-    client_register ! {whereis, Name, self()},
-    receive
-        {whereis_reply, Client} ->
-            Client
-    end.
+    gen_server:call(client_register, {whereis, Name}).
 
 unregister_client(Name) ->
-    client_register ! {unregister, Name, self()},
-    receive
-        {unregister_reply, Reply} ->
-            Reply
-    end.
+    gen_server:call(client_register, {unregister, Name}).

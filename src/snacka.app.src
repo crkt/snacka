@@ -7,7 +7,7 @@
    [kernel,
     stdlib
    ]},
-  {env,[{port, 8000}]},
+  {env,[{port, 3000}]},
   {modules, []},
 
   {maintainers, []},
