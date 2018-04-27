@@ -1,0 +1,10 @@
+version: '3.2'
+services:
+    snacka-cassandra:
+        image: cassandra
+        ports:
+            - "9042:9042"
+    snacka-app:
+        build: .
+        ports:
+            - "3000:3000"

@@ -1,1 +1,30 @@
-[].
+{"1.1.0",
+[{<<"cqerl">>,
+  {git,"https://github.com/matehat/cqerl",
+       {ref,"6e44b42df1cb0fcf82d8ab4df032c2e7cacb96f9"}},
+  0},
+ {<<"lz4">>,
+  {git,"https://github.com/szktty/erlang-lz4.git",
+       {ref,"6bc5efe93bab327788bcde24374f16044b549dd8"}},
+  1},
+ {<<"pooler">>,{pkg,<<"pooler">>,<<"1.5.3">>},1},
+ {<<"quickrand">>,{pkg,<<"quickrand">>,<<"1.7.3">>},2},
+ {<<"re2">>,
+  {git,"https://github.com/tuncer/re2.git",
+       {ref,"2471e06ed7e548ca1af522e95b16867135afdfdc"}},
+  1},
+ {<<"semver">>,
+  {git,"https://github.com/nebularis/semver.git",
+       {ref,"c7d509f38298ec6594be4efdcd8a8f2322760039"}},
+  1},
+ {<<"snappy">>,
+  {git,"https://github.com/fdmanana/snappy-erlang-nif.git",
+       {ref,"4e3b8611b6a1ff85a417b0f2fad8886c9485810e"}},
+  1},
+ {<<"uuid">>,{pkg,<<"uuid_erl">>,<<"1.7.2">>},1}]}.
+[
+{pkg_hash,[
+ {<<"pooler">>, <<"898CD1FA301FC42D4A8ED598CE139B71CA85B54C16AB161152B5CC5FBDCFA1A8">>},
+ {<<"quickrand">>, <<"0E4FB48FAC904FE0C6E21D7E8C31A288A0700E1E81A35B38B649FC119079755D">>},
+ {<<"uuid">>, <<"D596C8DD01A4AE48B9D8D51832CCC8F8302BF67ACD01336AEC3FCFAE6B9D2BC2">>}]}
+].

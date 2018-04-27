@@ -9,7 +9,6 @@
    ]},
   {env,[{port, 3000}]},
   {modules, []},
-
   {maintainers, []},
   {licenses, []},
   {links, []}
