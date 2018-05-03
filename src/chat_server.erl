@@ -56,12 +56,12 @@ loop(Client, Port, Controller) ->
     receive
         {tcp, Client, <<"quit\r\n">>} ->
             io:format("Quit was sent~n"),
-	    client_register:unregister_client(Port),
+	        client_register:unregister_client(Port),
             gen_server:cast(Controller, {closed, self()});
         {tcp, Client, Packet} ->
             io:format("Message ~p from ~p~n", [Packet, Client]),
             Registered = client_register:registered_clients(),
-            db:insert_message(#s_message{room_id ="1", id="1", user_id="1", data = Packet}),
+            db:insert_message(#s_message{room_id = uuid:get_v4(), id=uuid:get_v4(), user_id=uuid:get_v4(), data = Packet}),
             [gen_tcp:send(Socket, Packet) || {_, Socket} <- Registered,
                                              Socket =/= Client],
             loop(Client, Port, Controller);
