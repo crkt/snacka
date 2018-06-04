@@ -54,7 +54,7 @@ loop(Client, Port, Controller) ->
     receive
         {tcp, Client, <<"quit\r\n">>} ->
             io:format("Quit was sent~n"),
-	    client_register:unregister_client(Port),
+	        client_register:unregister_client(Port),
             gen_server:cast(Controller, {closed, self()});
         {tcp, Client, Packet} ->
             io:format("Message ~p from ~p~n", [Packet, Client]),

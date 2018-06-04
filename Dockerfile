@@ -1,2 +1,4 @@
-FROM erlang:apline
+FROM cassandra:latest
+
+COPY database.cql .
 

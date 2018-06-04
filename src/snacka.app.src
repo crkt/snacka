@@ -5,7 +5,8 @@
   {mod, { snacka_app, []}},
   {applications,
    [kernel,
-    stdlib
+    stdlib,
+    cqerl
    ]},
   {env,[{port, 3000}]},
   {modules, []},
