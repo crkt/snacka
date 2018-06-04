@@ -8,6 +8,8 @@
 -export([code_change/3]).
 -export([instance/2]).
 
+-include("db.hrl").
+
 
 start_link(Port) ->
     gen_server:start_link(?MODULE, [Port], []).
@@ -59,6 +61,7 @@ loop(Client, Port, Controller) ->
         {tcp, Client, Packet} ->
             io:format("Message ~p from ~p~n", [Packet, Client]),
             Registered = client_register:registered_clients(),
+            db:insert_message(#s_message{room_id = uuid:get_v4(), id=uuid:get_v4(), user_id=uuid:get_v4(), data = Packet}),
             [gen_tcp:send(Socket, Packet) || {_, Socket} <- Registered,
                                              Socket =/= Client],
             loop(Client, Port, Controller);
