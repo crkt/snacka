@@ -1,8 +1,8 @@
 CREATE KEYSPACE IF NOT EXISTS snacka 
     WITH replication = {'class': 'SimpleStrategy',
-                        'replication_factor': 1}
+                        'replication_factor': 1};
         
-USE snacka
+USE snacka;
 
 CREATE TABLE IF NOT EXISTS message (
     room_id UUID,
@@ -12,4 +12,3 @@ CREATE TABLE IF NOT EXISTS message (
     data text,
     PRIMARY KEY (room_id, timestamp, id)
 ) WITH CLUSTERING ORDER BY (timestamp ASC)
-

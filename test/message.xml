@@ -1,0 +1,7 @@
+<message
+    to='senaka@example.net'
+    from='client@example.net'
+    type='chat'
+    xml:lang='en'>
+    <body> What is up my doge?</body>
+</message>
